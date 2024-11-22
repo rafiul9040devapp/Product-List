@@ -66,9 +66,14 @@ class ProductItem extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              BlocProvider.of<ProductBloc>(context).add(RemoveProductEvent(productID: product.id ?? ""));
-              showSuccessToast(context, 'Product Is removed');
-              context.pop(true);
+              try{
+                BlocProvider.of<ProductBloc>(context).add(RemoveProductEvent(productID: product.id ?? ""));
+                showSuccessToast(context, '${product.productName} Is removed');
+                context.pop(true);
+              }catch(e){
+                showErrorToast(context, 'Unable To Remove ${product.productName}');
+                context.pop(false);
+              }
             },
             child: Text('Delete'),
           ),

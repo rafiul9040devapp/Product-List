@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_list/core/utils/helper.dart';
-import 'package:product_list/core/utils/snackbar.dart';
 import 'package:product_list/core/utils/toast_message.dart';
 import 'package:product_list/core/utils/ui_helper.dart';
 import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/features/products/model/product.dart';
 import 'package:product_list/notification/notification_service.dart';
 import 'package:product_list/routes/navigation_helper.dart';
-import 'package:product_list/routes/routes_name.dart';
 import 'package:product_list/widgets/custom_app_bar.dart';
 import 'package:product_list/widgets/custom_button.dart';
 import 'package:product_list/widgets/loading_state_display.dart';
@@ -156,51 +154,72 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
 
   void _onCreateProduct() {
     if (_formKey.currentState?.validate() ?? false) {
-      final productName = _productNameController.text;
-      final productQuantity = int.parse(_productQuantityController.text);
-      final productUnitPrice = int.parse(_productUnitPriceController.text);
+      final productName = _productNameController.text.trim();
+      final productQuantity = int.parse(_productQuantityController.text.trim());
+      final productUnitPrice = int.parse(_productUnitPriceController.text.trim());
 
       // Handle form submission
       print('Product Name: $productName');
       print('Product Quantity: $productQuantity');
       print('Product Unit Price: $productUnitPrice');
 
-      context.read<ProductBloc>().add(AddNewProductEvent(
-          productName: productName,
-          productQuantity: productQuantity,
-          productUnitPrice: productUnitPrice));
+     try{
+       context.read<ProductBloc>().add(AddNewProductEvent(
+           productName: productName,
+           productQuantity: productQuantity,
+           productUnitPrice: productUnitPrice));
+     }catch(e){
+       showErrorToast(context, e.toString());
+     }
     }
   }
 
   void _onUpdateProduct() {
     if (_formKey.currentState?.validate() ?? false) {
-      final productName = _productNameController.text;
-      final productQuantity = int.parse(_productQuantityController.text);
-      final productUnitPrice = int.parse(_productUnitPriceController.text);
+      if (_isInputUnchanged()) {
+        showErrorToast(context, 'No value is updated');
+        return;
+      }
 
-      // Handle form submission
-      print('Product Name: $productName');
-      print('Product Quantity: $productQuantity');
-      print('Product Unit Price: $productUnitPrice');
-
-      final updatedProduct = Product(
-        id: widget.product?.id ?? " ",
-        productCode: widget.product?.productCode ?? 0,
-        imageUrl: widget.product?.imageUrl ?? '',
-        productName: productName,
-        quantity: productQuantity,
-        unitPrice: productUnitPrice,
-        totalPrice: calculateTotalPrice(
-          quantity: productQuantity,
-          unitPrice: productUnitPrice,
-        ),
-      );
-
-      context
-          .read<ProductBloc>()
-          .add(UpdatingExistingProductEvent(product: updatedProduct));
+      try {
+        final updatedProduct = _createUpdatedProduct();
+        context.read<ProductBloc>().add(UpdatingExistingProductEvent(product: updatedProduct));
+      } catch (e) {
+        showErrorToast(context, e.toString());
+      }
     }
   }
+
+  /// Helper function to check if input is unchanged
+  bool _isInputUnchanged() {
+    return _productNameController.text.trim().toLowerCase() ==
+        (widget.product?.productName?.trim().toLowerCase() ?? '') &&
+        _productUnitPriceController.text.trim() ==
+            (widget.product?.unitPrice?.toString() ?? '') &&
+        _productQuantityController.text.trim() ==
+            (widget.product?.quantity?.toString() ?? '');
+  }
+
+  /// Helper function to create updated product
+  Product _createUpdatedProduct() {
+    final productName = _productNameController.text.trim();
+    final productQuantity = int.parse(_productQuantityController.text.trim());
+    final productUnitPrice = int.parse(_productUnitPriceController.text.trim());
+
+    return Product(
+      id: widget.product?.id ?? '',
+      productCode: widget.product?.productCode ?? 0,
+      imageUrl: widget.product?.imageUrl ?? '',
+      productName: productName,
+      quantity: productQuantity,
+      unitPrice: productUnitPrice,
+      totalPrice: calculateTotalPrice(
+        quantity: productQuantity,
+        unitPrice: productUnitPrice,
+      ),
+    );
+  }
+
 
   void _showNotification() {
     if (widget.product == null) {
@@ -215,3 +234,4 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
     }
   }
 }
+
