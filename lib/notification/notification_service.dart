@@ -1,0 +1,77 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
+
+class NotificationService {
+
+  static Future<void> initialize() async {
+    await AwesomeNotifications().initialize(
+     null,
+      [
+        NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'Basic Notifications',
+          channelDescription: 'Notification channel for basic notifications',
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.pinkAccent,
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+        ),
+      ],
+    );
+
+    // Request permissions for notifications
+    await _requestPermission();
+  }
+
+  /// Request permissions for notifications from the user.
+  static Future<void> _requestPermission() async {
+    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!isAllowed) {
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  }
+
+  /// Show a basic notification.
+  static Future<void> showBasicNotification({
+    required String title,
+    required String body,
+    String channelKey = 'basic_channel',
+    int id = 1,
+  }) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelKey,
+        title: title,
+        body: body,
+        notificationLayout: NotificationLayout.Default,
+      ),
+    );
+  }
+
+  //Notification with Big Picture
+  // Show a basic notification
+  static Future<void> showBasicNotificationWithImage({
+    required String title,
+    required String body,
+   required String imageUrl,
+  }) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: -1,
+        channelKey: 'basic_channel',
+        title: title,
+        body: body,
+        bigPicture: imageUrl,
+        largeIcon: imageUrl,
+        notificationLayout:NotificationLayout.BigPicture,
+      ),
+    );
+  }
+  //Sequence Notification
+
+  /// Cancel all notifications.
+  static Future<void> cancelAllNotifications() async {
+    await AwesomeNotifications().cancelAll();
+  }
+}
