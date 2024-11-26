@@ -16,6 +16,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const ProductPage(),
         );
+      case RoutesName.bottomNavigation:
+        return MaterialPageRoute(
+          builder: (context) => const BottomNavPage(),
+        );
       case RoutesName.productDetails:
         final args = settings.arguments as Product;
         return MaterialPageRoute(

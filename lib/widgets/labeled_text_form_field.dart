@@ -7,6 +7,7 @@ class LabeledTextFormField extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final List<dynamic>? inputFormatters;
+  final TextInputType? inputType;
 
   const LabeledTextFormField({
     super.key,
@@ -15,7 +16,8 @@ class LabeledTextFormField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     this.validator,
-     this.inputFormatters,
+    this.inputFormatters,
+    this.inputType = TextInputType.text,
   });
 
   @override
@@ -31,7 +33,7 @@ class LabeledTextFormField extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: colorTheme.onBackground,
+            color: colorTheme.onSurface,
           ),
         ),
         const SizedBox(height: 8), // Spacing between label and field
@@ -39,6 +41,7 @@ class LabeledTextFormField extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           validator: validator,
+          keyboardType: inputType,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

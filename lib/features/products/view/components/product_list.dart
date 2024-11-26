@@ -15,7 +15,7 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBar(title: 'Products',hasBackButton: false),
+        appBar: const CustomAppBar(title: 'Products'),
         body: ListView.builder(
           itemCount: productList.length,
           itemBuilder: (context, index) {

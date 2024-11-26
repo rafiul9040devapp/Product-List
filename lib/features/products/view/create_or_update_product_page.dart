@@ -11,8 +11,8 @@ import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/widgets/custom_app_bar.dart';
 import 'package:product_list/widgets/custom_button.dart';
 import 'package:product_list/widgets/loading_state_display.dart';
-
 import '../../../widgets/labeled_text_form_field.dart';
+
 
 class CreateOrUpdateProductPage extends StatefulWidget {
   final Product? product;
@@ -33,7 +33,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
   final _productUnitPriceController = TextEditingController();
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
 
     if (widget.product != null) {
@@ -56,16 +56,16 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
         }
       },
       listener: (context, state) {
-        if (state.status == ProductStatus.success) {
+        if (state.status == ProductStatus.success && mounted) {
           _showNotification();
           _formKey.currentState?.reset();
-          context.pop();
+          context.pop(true);
         }
-        if (state.status == ProductStatus.error) {
+        if (state.status == ProductStatus.error && mounted) {
           showErrorToast(context, state.errorMessage);
         }
       },
-      listenWhen: (previous, current) => previous.status != current.status,
+      listenWhen: (previous, current) => current.status  != previous.status,
     );
   }
 
@@ -98,6 +98,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                   controller: _productQuantityController,
                   labelText: 'Product Quantity',
                   hintText: 'Enter product quantity',
+                  inputType: TextInputType.number,
                   obscureText: false,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -116,6 +117,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                   controller: _productUnitPriceController,
                   labelText: 'Product Unit Price',
                   hintText: 'Enter product unit price',
+                  inputType: TextInputType.number,
                   obscureText: false,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -190,7 +192,6 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
     }
   }
 
-  /// Helper function to check if input is unchanged
   bool _isInputUnchanged() {
     return _productNameController.text.trim().toLowerCase() ==
         (widget.product?.productName?.trim().toLowerCase() ?? '') &&
@@ -200,7 +201,6 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
             (widget.product?.quantity?.toString() ?? '');
   }
 
-  /// Helper function to create updated product
   Product _createUpdatedProduct() {
     final productName = _productNameController.text.trim();
     final productQuantity = int.parse(_productQuantityController.text.trim());
@@ -219,7 +219,6 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
       ),
     );
   }
-
 
   void _showNotification() {
     if (widget.product == null) {

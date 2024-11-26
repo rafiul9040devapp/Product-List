@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:product_list/core/utils/theme_helper.dart';
 import 'package:product_list/core/utils/ui_helper.dart';
 import 'package:product_list/themes/app_colors.dart';
+import '../core/utils/helper.dart';
 import '../themes/assets_path.dart';
 
 class CustomCircularImageView extends StatelessWidget {
@@ -28,7 +29,8 @@ class CustomCircularImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     final double effectiveSize = size ?? UIHelper.largeRadius;
 
-    final imageWidget = CachedNetworkImage(
+    final imageWidget = isValidUrl(imageUrl) ?
+    CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, url) => CircleAvatar(
         radius: effectiveSize / 2,
@@ -54,7 +56,16 @@ class CustomCircularImageView extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ) :
+    CircleAvatar(
+      radius: effectiveSize / 2,
+      backgroundColor: context.colorTheme.secondary,
+      child: Icon(
+        Icons.broken_image,
+        color: AppColors.red.withOpacity(0.5),
+        size: 40.0.sp, // Responsive icon size
+      ),
+    ) ;
 
     if (isHero) {
       return Hero(

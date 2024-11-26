@@ -5,6 +5,7 @@ import 'package:product_list/core/utils/ui_helper.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../core/utils/helper.dart';
 import '../themes/app_colors.dart';
 
 class RegularImageView extends StatelessWidget {
@@ -31,7 +32,8 @@ class RegularImageView extends StatelessWidget {
     final double effectiveWidth = width ?? UIHelper.screenWidth;
     final double effectiveHeight = height ?? 250.h;
 
-    final imageWidget = CachedNetworkImage(
+    final imageWidget =  isValidUrl(imageUrl) ?
+    CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, url) => Shimmer.fromColors(
         baseColor: Colors.grey[300]!,
@@ -57,6 +59,16 @@ class RegularImageView extends StatelessWidget {
         width: effectiveWidth,
         height: effectiveHeight,
         fit: fit,
+      ),
+    ) :
+    Container(
+      width: effectiveWidth,
+      height: effectiveHeight,
+      color: context.colorTheme.secondary,
+      child: Icon(
+        Icons.broken_image,
+        color: AppColors.red.withOpacity(0.5),
+        size: 150.sp, // Responsive icon size
       ),
     );
 

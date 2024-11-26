@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:product_list/features/bottom_nav/cubit/bottom_nav_cubit.dart';
 import 'package:product_list/features/connectivity/view/internet_connection_check.dart';
 import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/routes/routes.dart';
@@ -22,6 +23,7 @@ class ProductApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider<ConnectivityCubit>(create: (context) => sl<ConnectivityCubit>()),
+            BlocProvider<BottomNavCubit>(create: (context) => sl<BottomNavCubit>()),
             BlocProvider<ProductBloc>(create: (context) => sl<ProductBloc>()..add(FetchAllProductEvent())),
           ],
           child: MaterialApp(

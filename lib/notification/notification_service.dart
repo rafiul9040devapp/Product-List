@@ -1,7 +1,11 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:timezone/data/latest.dart' as tz;
+
 
 class NotificationService {
+
+  static bool _isInitialized = false;
 
   static Future<void> initialize() async {
     await AwesomeNotifications().initialize(
@@ -19,8 +23,22 @@ class NotificationService {
       ],
     );
 
+    tz.initializeTimeZones();
+
     // Request permissions for notifications
     await _requestPermission();
+    _isInitialized = true;
+
+    if(_isInitialized){
+      await _scheduleDailyNotification(hour: 11, minute: 47);
+    }
+  }
+
+  Future<void> scheduleDailyNotification(int hour, int minute) async {
+    if (!_isInitialized) {
+      throw Exception('NotificationService is not initialized. Call initialize() first.');
+    }
+
   }
 
   /// Request permissions for notifications from the user.
@@ -69,6 +87,28 @@ class NotificationService {
     );
   }
   //Sequence Notification
+ static Future<void> _scheduleDailyNotification({required int hour, required int minute}) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 12,
+        channelKey: 'basic_channel',
+        title: 'Reminder',
+        body: 'This is your scheduled notification!',
+        wakeUpScreen: true,
+        category: NotificationCategory.Alarm,
+        notificationLayout: NotificationLayout.Default,
+      ),
+      schedule: NotificationCalendar(
+        hour: hour,
+        minute: minute,
+        second: 0,
+        repeats: true,
+        timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+      ),
+    );
+  }
+
+  //I am going to redirect to Product Details Page to show the Product
 
   /// Cancel all notifications.
   static Future<void> cancelAllNotifications() async {
