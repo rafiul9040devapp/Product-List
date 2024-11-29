@@ -23,13 +23,13 @@ class ProductList extends StatelessWidget {
             return ProductItem(product: product);
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.navigateTo(routeName: RoutesName.createOrUpdateProduct);
-          },
-          tooltip: 'Add Product',
-          child: const Icon(Icons.add),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     context.navigateTo(routeName: RoutesName.createOrUpdateProduct);
+        //   },
+        //   tooltip: 'Add Product',
+        //   child: const Icon(Icons.add),
+        // ),
       ),
     );
   }

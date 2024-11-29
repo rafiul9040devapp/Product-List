@@ -12,9 +12,22 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) =>   const InternetConnectionCheckPage(),
         );
+      case RoutesName.home:
+        return MaterialPageRoute(
+          builder: (context) => const HomePage(initialPage: 0),
+        );
+      case RoutesName.createProduct:
+        return MaterialPageRoute(
+          builder: (context) => const HomePage(initialPage: 1),
+        );
       case RoutesName.product:
         return MaterialPageRoute(
           builder: (context) => const ProductPage(),
+        );
+      case RoutesName.createOrUpdateProduct:
+        final args = settings.arguments as Product?;
+        return MaterialPageRoute(
+          builder: (context) => CreateOrUpdateProductPage(product:args),
         );
       case RoutesName.bottomNavigation:
         return MaterialPageRoute(
@@ -24,11 +37,6 @@ class RouteGenerator {
         final args = settings.arguments as Product;
         return MaterialPageRoute(
           builder: (context) => ProductDetailsPage(product: args),
-        );
-      case RoutesName.createOrUpdateProduct:
-        final args = settings.arguments as Product?;
-        return MaterialPageRoute(
-          builder: (context) => CreateOrUpdateProductPage(product:args),
         );
       default:
         return _errorRoute();

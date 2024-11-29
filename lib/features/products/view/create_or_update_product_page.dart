@@ -45,6 +45,12 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
     }
   }
 
+  void clear(){
+    _productQuantityController.clear();
+    _productUnitPriceController.clear();
+    _productNameController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductBloc, ProductState>(
@@ -59,7 +65,10 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
         if (state.status == ProductStatus.success && mounted) {
           _showNotification();
           _formKey.currentState?.reset();
-          context.pop(true);
+          clear();
+          if(widget.product != null){
+            context.pop(true);
+          }
         }
         if (state.status == ProductStatus.error && mounted) {
           showErrorToast(context, state.errorMessage);
