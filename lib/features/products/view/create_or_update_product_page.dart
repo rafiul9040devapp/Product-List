@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_list/core/utils/helper.dart';
 import 'package:product_list/core/utils/toast_message.dart';
 import 'package:product_list/core/utils/ui_helper.dart';
+import 'package:product_list/core/utils/validator.dart';
 import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/features/products/model/product.dart';
 import 'package:product_list/notification/notification_service.dart';
@@ -95,12 +96,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                   labelText: 'Product Name',
                   hintText: 'Enter product name',
                   obscureText: false,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Product name is required';
-                    }
-                    return null;
-                  },
+                  validator: (value) => Validator.validateField(value, 'Product Name',minLength: 5),
                 ),
                 UIHelper.verticalSpaceMedium(),
                 LabeledTextFormField(
@@ -109,15 +105,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                   hintText: 'Enter product quantity',
                   inputType: TextInputType.number,
                   obscureText: false,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Product quantity is required';
-                    }
-                    if (int.tryParse(value) == null || int.parse(value) <= 0) {
-                      return 'Please enter a valid quantity';
-                    }
-                    return null;
-                  },
+                  validator: (value) => Validator.productQuantityValidator(value),
                   // Restrict input to numbers only
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
@@ -128,15 +116,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                   hintText: 'Enter product unit price',
                   inputType: TextInputType.number,
                   obscureText: false,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Product unit price is required';
-                    }
-                    if (int.tryParse(value) == null || int.parse(value) <= 0) {
-                      return 'Please enter a valid price';
-                    }
-                    return null;
-                  },
+                  validator: (value) => Validator.productUnitPriceValidator(value),
                   // Restrict input to numbers only
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
