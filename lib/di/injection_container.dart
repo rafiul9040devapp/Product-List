@@ -7,7 +7,6 @@ import 'package:product_list/core/network_resource/custom_interceptor.dart';
 import 'package:product_list/data/network/api_service.dart';
 import 'package:product_list/data/network/api_service_impl.dart';
 import 'package:product_list/features/bottom_nav/bloc/navigation_bloc.dart';
-import 'package:product_list/features/bottom_nav/cubit/bottom_nav_cubit.dart';
 import 'package:product_list/features/connectivity/cubit/connectivity_cubit.dart';
 import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/repository/product/product_repository.dart';
@@ -56,7 +55,6 @@ class InjectionContainer {
   static void _registerBlocs() {
     sl.registerFactory<ConnectivityCubit>(() => ConnectivityCubit(connectivity: sl<Connectivity>()));
     sl.registerFactory<ProductBloc>(() => ProductBloc(productRepository: sl<ProductRepository>()));
-    sl.registerFactory<BottomNavCubit>(() => BottomNavCubit());
     sl.registerFactory<NavigationBloc>(() => NavigationBloc());
   }
 }

@@ -22,6 +22,7 @@ dependencies:
   google_fonts: ^6.2.1
   shimmer: ^3.0.0
   toastification: ^2.3.0
+  awesome_dialog: ^3.2.1
 
   awesome_notifications: ^0.10.0
   timezone: ^0.10.0
