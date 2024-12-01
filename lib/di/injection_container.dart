@@ -12,10 +12,6 @@ import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/repository/product/product_repository.dart';
 import 'package:product_list/repository/product/product_repository_impl.dart';
 
-
-
-
-
 final sl = GetIt.instance;
 
 class InjectionContainer {

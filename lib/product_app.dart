@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:product_list/features/bottom_nav/bloc/navigation_bloc.dart';
-import 'package:product_list/features/connectivity/view/internet_connection_check.dart';
+import 'package:product_list/features/connectivity/view/internet_connection_check_page.dart';
 import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/routes/routes.dart';
 import 'package:product_list/themes/light_mode.dart';

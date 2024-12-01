@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_list/features/pages.dart';
 import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/routes/routes_name.dart';
+import '../../../core/utils/dialogue_helper.dart';
 import '../../../themes/app_colors.dart';
 import '../bloc/navigation_bloc.dart';
 
@@ -59,54 +60,60 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<NavigationBloc, NavigationState>(
-        builder: (context, state) {
-          _animationController.forward(from: 1);
-          return SlideTransition(
-            position: _slideAnimation,
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                context.read<NavigationBloc>().add(PageTapped(index));
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop,Object? result){
+        DialogHelper.showExitConfirmationDialog(context);
+      },
+      child: Scaffold(
+        body: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
+            _animationController.forward(from: 1);
+            return SlideTransition(
+              position: _slideAnimation,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  context.read<NavigationBloc>().add(PageTapped(index));
 
-                // Updated navigation logic
-                final routeName = switch (index) {
-                  0 => RoutesName.home,
-                  1 => RoutesName.createProduct,
-                  _ => throw UnimplementedError(),
-                };
+                  // Updated navigation logic
+                  final routeName = switch (index) {
+                    0 => RoutesName.home,
+                    1 => RoutesName.createProduct,
+                    _ => throw UnimplementedError(),
+                  };
 
-                // Navigate based on the route name
-                context.replaceWith(routeName: routeName);
-              },
-              children: const [
-                ProductPage(),
-                CreateOrUpdateProductPage(),
+                  // Navigate based on the route name
+                  context.replaceWith(routeName: routeName);
+                },
+                children: const [
+                  ProductPage(),
+                  CreateOrUpdateProductPage(),
+                ],
+              ),
+            );
+          },
+        ),
+        bottomNavigationBar: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
+            return BottomNavigationBar(
+              currentIndex: state.selectedIndex,
+              selectedItemColor: AppColors.black,
+              unselectedItemColor: AppColors.grey,
+              onTap: _onBottomNavTapped,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.create_new_folder_rounded),
+                  label: 'Create',
+                ),
               ],
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BlocBuilder<NavigationBloc, NavigationState>(
-        builder: (context, state) {
-          return BottomNavigationBar(
-            currentIndex: state.selectedIndex,
-            selectedItemColor: AppColors.black,
-            unselectedItemColor: AppColors.grey,
-            onTap: _onBottomNavTapped,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.create_new_folder_rounded),
-                label: 'Create',
-              ),
-            ],
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

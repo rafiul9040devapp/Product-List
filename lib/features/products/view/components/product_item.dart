@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_list/core/utils/ui_helper.dart';
-import 'package:product_list/features/products/view/components/product_helper.dart';
+import 'package:product_list/features/products/view/helper/product_helper.dart';
 import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/routes/routes_name.dart';
 import 'package:product_list/widgets/custom_circular_image_view.dart';
