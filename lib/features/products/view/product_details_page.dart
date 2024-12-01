@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:product_list/core/utils/theme_helper.dart';
 import 'package:product_list/core/utils/ui_helper.dart';
 import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/features/products/model/product.dart';
@@ -36,7 +38,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         return switch (state.status) {
           ProductStatus.initial => const InitialStateDisplay(),
           ProductStatus.loading => const LoadingStateDisplay(),
-          ProductStatus.success => _buildUI(context, state.product),
+          ProductStatus.success => _buildUIAlternative(context, state.product),
           ProductStatus.error =>
             ErrorMessageDisplay(message: state.errorMessage),
         };
@@ -161,6 +163,108 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       ),
     );
   }
+
+  Widget _buildUIAlternative(BuildContext context, Product product) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: product.productName ?? 'N/A',
+      ),
+      body: Stack(
+        children: [
+          // Background image
+          Positioned.fill(
+            child: RegularImageView(
+              imageUrl: product.imageUrl ?? '',
+              isHero: true,
+              heroTag: product.id ?? '',
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Product details card
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r),topRight:  Radius.circular(16.r)),
+              ),
+              child: Padding(
+                padding: UIHelper.paddingMedium,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    // Product Name
+                    Text(
+                      product.productName ?? 'No Name',
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+
+                    // Product Code
+                    _buildDetailRow(
+                      context,
+                      label: 'Product Code',
+                      value: product.productCode?.toString() ?? 'N/A',
+                    ),
+                    SizedBox(height: 8.h),
+
+                    // Quantity
+                    _buildDetailRow(
+                      context,
+                      label: 'Quantity',
+                      value: product.quantity?.toString() ?? 'N/A',
+                    ),
+                    SizedBox(height: 8.h),
+
+                    // Unit Price
+                    _buildDetailRow(
+                      context,
+                      label: 'Unit Price',
+                      value: product.unitPrice != null
+                          ? '\$${product.unitPrice}'
+                          : 'N/A',
+                    ),
+                    SizedBox(height: 8.h),
+
+                    // Total Price
+                    _buildDetailRow(
+                      context,
+                      label: 'Total Price',
+                      value: product.totalPrice != null
+                          ? '\$${product.totalPrice}'
+                          : 'N/A',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+// Helper function to build a row for product details
+  Widget _buildDetailRow(BuildContext context, {required String label, required String value}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style:context.textTheme.bodyLarge,
+        ),
+        Text(
+          value,
+          style: context.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
 
 
 }
