@@ -7,6 +7,7 @@ import 'package:product_list/features/products/bloc/product_bloc.dart';
 import 'package:product_list/features/products/model/product.dart';
 import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/routes/routes_name.dart';
+import 'package:product_list/themes/app_colors.dart';
 import 'package:product_list/widgets/custom_app_bar.dart';
 import 'package:product_list/widgets/error_message_display.dart';
 import 'package:product_list/widgets/initial_state_display.dart';
@@ -184,9 +185,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
+              height: UIHelper.screenWidth * .7,
               decoration: BoxDecoration(
+                color: AppColors.white.withOpacity(.9),
                 shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r),topRight:  Radius.circular(16.r)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25.r),topRight:  Radius.circular(25.r)),
               ),
               child: Padding(
                 padding: UIHelper.paddingMedium,
@@ -196,11 +199,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     // Product Name
                     Text(
                       product.productName ?? 'No Name',
-                      style: context.textTheme.titleMedium?.copyWith(
+                      style: context.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 8.h),
+                    UIHelper.verticalSpaceMedium(),
 
                     // Product Code
                     _buildDetailRow(
