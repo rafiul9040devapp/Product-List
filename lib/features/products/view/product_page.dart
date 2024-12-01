@@ -18,7 +18,7 @@ class ProductPage extends StatelessWidget {
           ProductStatus.loading => const LoadingStateDisplay(),
           ProductStatus.success => state.productList.isNotEmpty
               ? ProductList(productList: state.productList)
-              : SizedBox(),
+              : const SizedBox(),
           ProductStatus.error =>
             ErrorMessageDisplay(message: state.errorMessage),
         };
