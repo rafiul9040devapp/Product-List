@@ -48,3 +48,5 @@ class UpdatingExistingProductEvent extends ProductEvent{
   @override
   List<Object?> get props => [product];
 }
+
+class ResetProductStatusEvent extends ProductEvent{}

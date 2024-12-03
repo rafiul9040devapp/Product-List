@@ -12,6 +12,7 @@ import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/widgets/custom_app_bar.dart';
 import 'package:product_list/widgets/custom_button.dart';
 import 'package:product_list/widgets/loading_state_display.dart';
+import '../../../generated/l10n.dart';
 import '../../../widgets/labeled_text_form_field.dart';
 
 
@@ -38,11 +39,11 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
     super.initState();
 
     if (widget.product != null) {
-      _productNameController.text = widget.product?.productName ?? "N/A";
+      _productNameController.text = widget.product?.productName ?? S.current.not_available;
       _productQuantityController.text =
-          widget.product?.quantity.toString() ?? "N/A";
+          widget.product?.quantity.toString() ?? S.current.not_available;
       _productUnitPriceController.text =
-          widget.product?.unitPrice.toString() ?? "N/A";
+          widget.product?.unitPrice.toString() ?? S.current.not_available;
     }
   }
 
@@ -83,7 +84,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
-          title: widget.product == null ? 'Create Product' : 'Update Product',
+          title: widget.product == null ? S.current.create_product : S.current.update_product,
         ),
         body: Padding(
           padding: UIHelper.symmetricPadding(),
@@ -93,16 +94,16 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
               children: [
                 LabeledTextFormField(
                   controller: _productNameController,
-                  labelText: 'Product Name',
-                  hintText: 'Enter product name',
+                  labelText: S.current.products_name,
+                  hintText: S.current.enter_products_name,
                   obscureText: false,
                   validator: (value) => Validator.validateField(value, 'Product Name',minLength: 5),
                 ),
                 UIHelper.verticalSpaceMedium(),
                 LabeledTextFormField(
                   controller: _productQuantityController,
-                  labelText: 'Product Quantity',
-                  hintText: 'Enter product quantity',
+                  labelText: S.current.products_quantity,
+                  hintText: S.current.enter_products_quantity,
                   inputType: TextInputType.number,
                   obscureText: false,
                   validator: (value) => Validator.productQuantityValidator(value),
@@ -112,8 +113,8 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                 UIHelper.verticalSpaceMedium(),
                 LabeledTextFormField(
                   controller: _productUnitPriceController,
-                  labelText: 'Product Unit Price',
-                  hintText: 'Enter product unit price',
+                  labelText: S.current.products_unit_price,
+                  hintText: S.current.enter_products_unit_price,
                   inputType: TextInputType.number,
                   obscureText: false,
                   validator: (value) => Validator.productUnitPriceValidator(value),
@@ -125,7 +126,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
                   onTap: widget.product == null
                       ? _onCreateProduct
                       : _onUpdateProduct,
-                  text: widget.product == null ? 'Create' : 'Update',
+                  text: widget.product == null ? S.current.create : S.current.update,
                 ),
               ],
             ),
@@ -168,7 +169,7 @@ class _CreateOrUpdateProductPageState extends State<CreateOrUpdateProductPage> {
   void _onUpdateProduct() {
     if (_formKey.currentState?.validate() ?? false) {
       if (_isInputUnchanged()) {
-        showErrorToast(context, 'No value is updated');
+        showErrorToast(context, S.current.no_value_updated);
         return;
       }
 

@@ -4,6 +4,7 @@ import 'package:product_list/core/utils/theme_helper.dart';
 import 'package:product_list/features/products/model/product.dart';
 
 import '../../../../core/utils/ui_helper.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../themes/app_colors.dart';
 import '../../../../widgets/custom_app_bar.dart';
 import '../../../../widgets/regular_image_view.dart';
@@ -16,16 +17,16 @@ class ProductDetailsInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: product.productName ?? 'N/A',
+        title: product.productName ?? S.current.not_available,
       ),
       body: Stack(
         children: [
           // Background image
           Positioned.fill(
             child: RegularImageView(
-              imageUrl: product.imageUrl ?? '',
+              imageUrl: product.imageUrl ?? S.current.not_available,
               isHero: true,
-              heroTag: product.id ?? '',
+              heroTag: product.id ?? S.current.not_available,
               fit: BoxFit.cover,
             ),
           ),
@@ -46,7 +47,7 @@ class ProductDetailsInfo extends StatelessWidget {
                   children: [
                     // Product Name
                     Text(
-                      product.productName ?? 'No Name',
+                      product.productName ?? S.current.no_name,
                       style: context.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -57,36 +58,36 @@ class ProductDetailsInfo extends StatelessWidget {
                     // Product Code
                     _buildDetailRow(
                       context,
-                      label: 'Product Code',
-                      value: product.productCode?.toString() ?? 'N/A',
+                      label: S.current.products_code,
+                      value: product.productCode?.toString() ?? S.current.not_available,
                     ),
                     UIHelper.verticalSpaceSmall(),
 
                     // Quantity
                     _buildDetailRow(
                       context,
-                      label: 'Quantity',
-                      value: product.quantity?.toString() ?? 'N/A',
+                      label: S.current.quantity,
+                      value: product.quantity?.toString() ?? S.current.not_available,
                     ),
                     UIHelper.verticalSpaceSmall(),
 
                     // Unit Price
                     _buildDetailRow(
                       context,
-                      label: 'Unit Price',
+                      label: S.current.unit_price,
                       value: product.unitPrice != null
                           ? '\$${product.unitPrice}'
-                          : 'N/A',
+                          : S.current.not_available,
                     ),
                     UIHelper.verticalSpaceSmall(),
 
                     // Total Price
                     _buildDetailRow(
                       context,
-                      label: 'Total Price',
+                      label: S.current.total_price,
                       value: product.totalPrice != null
                           ? '\$${product.totalPrice}'
-                          : 'N/A',
+                          : S.current.not_available,
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_list/features/products/model/product.dart';
+import 'package:product_list/generated/l10n.dart';
 import 'package:product_list/routes/routes_name.dart';
 import 'package:product_list/widgets/error_message_display.dart';
 import '../features/pages.dart';
@@ -41,7 +42,7 @@ class RouteGenerator {
 
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(
-      builder: (context) => const ErrorMessageDisplay(message: 'Page not found'),
+      builder: (context) => ErrorMessageDisplay(message: S.current.page_not_found),
     );
   }
 }

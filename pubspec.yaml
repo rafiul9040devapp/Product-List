@@ -12,6 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   cupertino_icons: ^1.0.8
   connectivity_plus: ^6.1.0
@@ -41,6 +43,11 @@ dependencies:
   json_annotation: ^4.9.0
   equatable: ^2.0.5
 
+  intl:
+  intl_utils: ^2.8.7
+
+
+
 
 
 
@@ -58,6 +65,7 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/images/
@@ -95,3 +103,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_intl:
+  enabled: true

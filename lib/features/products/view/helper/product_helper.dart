@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../core/utils/toast_message.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../themes/assets_path.dart';
 import '../../bloc/product_bloc.dart';
 import '../../model/product.dart';
@@ -25,10 +26,10 @@ class ProductHelper {
         reverse: true,
       ),
       animType: AnimType.rightSlide,
-      title: 'Delete Confirmation',
+      title: S.current.delete_confirm,
       desc: 'Are you sure you want to delete ${product.productName}?',
-      btnCancelText: 'Cancel',
-      btnOkText: 'Confirm',
+      btnCancelText: S.current.cancel,
+      btnOkText: S.current.confirm,
       btnCancelOnPress: () {
         result = false; // Set result to false if Cancel is pressed
       },
@@ -36,7 +37,7 @@ class ProductHelper {
         try {
           // Dispatch the RemoveProductEvent with the product ID
           BlocProvider.of<ProductBloc>(context).add(
-            RemoveProductEvent(productID: product.id ?? ""),
+            RemoveProductEvent(productID: product.id ?? S.current.not_available),
           );
           // Show success message
           showSuccessToast(context, '${product.productName} has been removed');

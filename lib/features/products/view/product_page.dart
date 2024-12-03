@@ -6,8 +6,30 @@ import 'package:product_list/widgets/error_message_display.dart';
 import 'package:product_list/widgets/initial_state_display.dart';
 import 'package:product_list/widgets/loading_state_display.dart';
 
-class ProductPage extends StatelessWidget {
+import '../../../di/injection_container.dart';
+
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if(context.read<ProductBloc>().state.status == ProductStatus.initial){
+      context.read<ProductBloc>().add(FetchAllProductEvent());
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+   sl<ProductBloc>().add(ResetProductStatusEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
