@@ -4,6 +4,7 @@ import 'package:product_list/features/products/view/helper/product_helper.dart';
 import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/routes/routes_name.dart';
 import 'package:product_list/widgets/custom_circular_image_view.dart';
+import '../../../../generated/l10n.dart';
 import '../../model/product.dart';
 
 
@@ -32,7 +33,7 @@ class ProductItem extends StatelessWidget {
         if (direction == DismissDirection.endToStart) {
           return await ProductHelper.showDeleteConfirmationDialogue(context, product);
         } else if (direction == DismissDirection.startToEnd) {
-          _navigateToUpdateScreen(context, product);
+          _navigateToUpdateScreen(context);
           return false;
         }
         return false;
@@ -42,17 +43,17 @@ class ProductItem extends StatelessWidget {
           _navigateToDetailsScreen(context);
         },
         child: ListTile(
-          leading: CustomCircularImageView(imageUrl: product.imageUrl ?? '',
+          leading: CustomCircularImageView(imageUrl: product.imageUrl ?? S.current.not_available,
               isHero: true,
-              heroTag: product.id ?? ''),
-          title: Text(product.productName ?? ''),
+              heroTag: product.id ?? S.current.not_available),
+          title: Text(product.productName ?? S.current.not_available),
           subtitle: Text('\$${product.unitPrice?.toStringAsFixed(2)}'),
         ),
       ),
     );
   }
 
-  void _navigateToUpdateScreen(BuildContext context, Product product) {
+  void _navigateToUpdateScreen(BuildContext context) {
     context.navigateTo(
         routeName: RoutesName.createOrUpdateProduct, arguments: product);
   }

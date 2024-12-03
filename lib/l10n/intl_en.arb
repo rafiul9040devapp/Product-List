@@ -1,6 +1,27 @@
 {
   "app_name": "CRUD",
   "products": "Products",
+  "products_code": "Product Code",
+  "products_name": "Product Name",
+  "enter_products_name": "Enter Product Name",
+  "products_quantity": "Product Quantity",
+  "enter_products_quantity": "Enter Product Quantity",
+  "products_unit_price": "Product Unit Price",
+  "enter_products_unit_price": "Enter Product Unit Price",
+  "quantity": "Quantity",
+  "unit_price": "Unit Price",
+  "total_price": "Total Price",
   "not_available": "N/A",
-  "no_name": "No Name"
+  "not_internet_connection": "No Internet Connection.\nPlease check your network settings.",
+  "home": "Home",
+  "create": "Create",
+  "update": "Update",
+  "create_product": "Create Product",
+  "update_product": "Update Product",
+  "delete_confirm": "Delete Confirmation",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "no_name": "No Name",
+  "page_not_found": "Page not found",
+  "no_value_updated": "No value is updated"
 }

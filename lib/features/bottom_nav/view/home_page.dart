@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:product_list/features/pages.dart';
+import 'package:product_list/generated/l10n.dart';
 import 'package:product_list/routes/navigation_helper.dart';
 import 'package:product_list/routes/routes_name.dart';
 import '../../../core/utils/dialogue_helper.dart';
@@ -101,14 +103,14 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
               selectedItemColor: AppColors.black,
               unselectedItemColor: AppColors.grey,
               onTap: _onBottomNavTapped,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+                  icon: Icon(Icons.home,size: 25.sp),
+                  label: S.current.home,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.create_new_folder_rounded),
-                  label: 'Create',
+                 BottomNavigationBarItem(
+                  icon: Icon(Icons.create_new_folder_rounded,size: 25.sp),
+                  label: S.current.create,
                 ),
               ],
             );

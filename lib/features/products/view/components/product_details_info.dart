@@ -58,7 +58,7 @@ class ProductDetailsInfo extends StatelessWidget {
                     // Product Code
                     _buildDetailRow(
                       context,
-                      label: 'Product Code',
+                      label: S.current.products_code,
                       value: product.productCode?.toString() ?? S.current.not_available,
                     ),
                     UIHelper.verticalSpaceSmall(),
@@ -66,7 +66,7 @@ class ProductDetailsInfo extends StatelessWidget {
                     // Quantity
                     _buildDetailRow(
                       context,
-                      label: 'Quantity',
+                      label: S.current.quantity,
                       value: product.quantity?.toString() ?? S.current.not_available,
                     ),
                     UIHelper.verticalSpaceSmall(),
@@ -74,7 +74,7 @@ class ProductDetailsInfo extends StatelessWidget {
                     // Unit Price
                     _buildDetailRow(
                       context,
-                      label: 'Unit Price',
+                      label: S.current.unit_price,
                       value: product.unitPrice != null
                           ? '\$${product.unitPrice}'
                           : S.current.not_available,
@@ -84,7 +84,7 @@ class ProductDetailsInfo extends StatelessWidget {
                     // Total Price
                     _buildDetailRow(
                       context,
-                      label: 'Total Price',
+                      label: S.current.total_price,
                       value: product.totalPrice != null
                           ? '\$${product.totalPrice}'
                           : S.current.not_available,
