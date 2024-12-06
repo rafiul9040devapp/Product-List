@@ -51,6 +51,7 @@ class CustomInterceptor extends Interceptor{
     return err.type == DioExceptionType.connectionTimeout ||
         err.type == DioExceptionType.receiveTimeout ||
         err.type == DioExceptionType.sendTimeout ||
+        err.type == DioExceptionType.connectionError ||
         (err.response?.statusCode != null && err.response!.statusCode! >= 500);
   }
 
